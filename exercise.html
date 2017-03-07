@@ -1,0 +1,62 @@
+<html>
+<head>
+	<title>PubSub订阅 发布 退订</title>
+</head>
+<body>
+
+</body>
+<script>
+	var PubSub = {}; 
+	var queue = {}; //用于存储事件队列
+	
+	//订阅接口 为cb订阅event
+	PubSub.on = function(event, cb){
+		if (!queue[event]){
+			queue[event]=[];
+		}
+		queue[event].push(cb);  //push() 方法可向数组的末尾添加一个或多个元素，并返回新的长度
+	}
+	
+	//退订接口
+	PubSub.off = function(event, cb) {
+		var currevent = queue[event];
+		var len = 0;
+		if (currevent) {
+			len = currevent.length;
+			for (var i=len; i>=0;i--) {
+				if (currevent[i] === cb) {
+					currevent.splice(i, 1); //splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目
+				}
+			}
+		}
+	}
+	
+	//发布接口
+	PubSub.emit = function(event){
+		var currentevent = queue[event];
+		if (currentevent) {
+			for (var i=0;i<currentevent.length;i++) {
+				currentevent[i](); //??
+			}
+		}
+	}
+	
+	//实例
+	//订阅
+	var callbackA = function(){
+		console.log('event a happened!');
+	}
+	
+	PubSub.on = function('a',callbackA);
+	PubSub.on = function('b',function(){
+		console.log('event b happened!');
+	});
+	
+	//退订
+	PubSub.off = function('a',callbackA);
+	
+	//发布
+	PubSub.emit = function('a');
+	PubSub.emit = function('b');
+	
+</script>
