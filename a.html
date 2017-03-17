@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>a.html</title>
+</head>
+<body>
+<div>
+<p>aaaaaaaaaaaaaaaa</p>
+</div>
+<script src="../../../jquery.min.js">  </script>
+<script>
+$(function(){
+	var url = 'history.html';
+	setTimeout(function(){
+	window.history.replaceState('','',url); //替换当前浏览器地址为history.html
+	window.location.reload(); //重载当前浏览器url
+	},500);
+});
+</script>
+
+</body>
+</html>
